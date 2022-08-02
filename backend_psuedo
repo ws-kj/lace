@@ -67,7 +67,7 @@ bool psubset(vector<T> A, vector<T> B){
 		return false;
 	}
 
-	return final; // will return true if the set of elements in A but not B is empty, and the set of elements in B but not A is not empty.  COULD IMPLEMENT DIFFERENCES CALL?
+	return empty && empty2; // will return true if the set of elements in A but not B is empty, and the set of elements in B but not A is not empty.  COULD IMPLEMENT DIFFERENCES CALL?
 }
 
 
