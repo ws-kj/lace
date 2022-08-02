@@ -94,6 +94,7 @@ vector<T> difference(A, B){
 			}
 		}
 		if(!found){
+			
 			vect_inA_notB.push_back(element);
 		}
 	}
