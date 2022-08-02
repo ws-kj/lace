@@ -8,6 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 project ("lace")
 
 # Add source to this project's executable.
-add_executable (lace "lace.cpp" "lace.h" "lace_example.cpp")
+add_executable (lace "lace_example.cpp" "lace.cpp" "lace.h" )
 
 # TODO: Add tests and install targets if needed.
