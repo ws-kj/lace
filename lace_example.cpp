@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 		lace::Result set_diff(std::vector<lace::Num> my_vec)
 		{
 			auto A = lace::Set(&my_vec, “A”);
-			return lace::EvalWith<lace::Set>(&A, “A \ {2, 4, 6}”);
+			return lace::EvalWith<lace::Set>(“A \ {2, 4, 6}”, &A);
 		}
 
 		std::vector<lace::Num> vec{1, 2, 3, 4, 5, 6};

@@ -40,4 +40,6 @@ namespace lace
 		std::string getError();
 	};
 
+	template<typename... Args>
+	lace::Result EvalWith(std::string expr, Args... dat);
 }
