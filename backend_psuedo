@@ -1,3 +1,4 @@
+
 #include <vector>
 // This is in no way actual code, this is just to have a backend version of these function to be easily implemented instead of doing it from scratch last minute.
 
@@ -20,15 +21,17 @@ bool elem(vector<T> A, vector<T> B){
 	return elem;
 }
 
-// THE SUBSET STATEMENT
+
+ 
+// THE PROPER SUBSET STATEMENT
 /*
-A subset B (is how it would be called)
+A psubset B (is how it would be called)
 Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
 Not taking namespaces into account
 add std in before vector
 */
 template <class T> 
-bool subset(vector<T> A, vector<T> B){
+bool psubset(vector<T> A, vector<T> B){
 	vector<T> vect_inA_notB;
 
 	for(T element: A){
@@ -64,7 +67,40 @@ bool subset(vector<T> A, vector<T> B){
 		return false;
 	}
 
-	return final; // will return true if the set of elements in A but not B is empty, and the set of elements in B but not A is not empty
+	return final; // will return true if the set of elements in A but not B is empty, and the set of elements in B but not A is not empty.  COULD IMPLEMENT DIFFERENCES CALL?
+}
+
+
+// THE  SUBSET STATEMENT
+/*
+A subset B (is how it would be called)
+Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
+Not taking namespaces into account
+add std in before vector
+*/
+template <class T> 
+bool subset(vector<T> A, vector<T> B){
+	vector<T> vect_inA_notB;
+
+	for(T element: A){
+		bool found = false;
+		for(T element2: B){
+			if(element==element2){
+				found = true;
+			}
+		}
+		if(!found){
+			vect_inA_notB.push_back(element);
+		}
+	}
+	bool empty = vect_inA_notB.size() == 0;
+	if(empty==false){
+		return false;
+	}
+
+
+
+	return empty; // will return true if the set of elements in A but not B is empty  COULD IMPLEMENT DIFFERENCES CALL?
 }
 
 
@@ -158,4 +194,55 @@ vector<T> inter(vector<T> A, vector<T> B){
 		}
 	}
 	return vect_in_both;
+}
+
+
+// THE FACTORIAL OPERATION
+/*
+x!
+Assuming x is a properly declared int
+not using namespaces
+returns x factorial
+*/
+long long int factorial(int x){
+	long long int total = 1;  // I'm planning for BIG numbers even though this is like supercomputer size
+	if(x>0){
+		while(x>0){
+			total*=x;
+			x--;
+		}
+	}
+	else if(x<0){
+		total = -1;
+	}
+	return total;
+}
+
+
+// THE abs function
+/*
+abs(x)
+assuming x is a properly declared integer or double
+not using namespace
+returns abs value of x
+going to do it differently than c++
+I'm gonna write this function as poorly as possible, I'll change it later to the commented code to make it more efficient
+*/
+template <class T>
+T abs(T x){
+	if(x > 0){
+		continue;
+	}
+	else if(x == 0){
+		continue;
+	}
+	else if(x < 0){
+		x *= -1;
+	}
+	/*
+	if(x<0){
+		x*=-1;
+	}
+	*/
+	return x;
 }
