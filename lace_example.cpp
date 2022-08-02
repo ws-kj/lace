@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 		}
 
 		std::vector<lace::Num> vec{1, 2, 3, 4, 5, 6};
-		cout << set_diff(vec).to_vec().size() << endl; //Expect 3
+		cout << set_diff(vec).getData().asVec().size() << endl; //Expect 3
 
 	*/
 	std::vector<lace::Num> vec{ 1, 2, 3, 4, 5, 6 };

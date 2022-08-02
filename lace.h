@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace lace 
 {
@@ -23,8 +24,16 @@ namespace lace
 		std::vector<lace::Num> asVec();
 	};
 
-	template<class T>
-	class Result {
+	class Result 
+	{
+		lace::Set data;
+		std::string err;
 
+	public:
+		Result(lace::Set data);
+		Result(lace::Set data, std::string err);
+
+		std::optional<lace::Set> getData();
+		std::string getError();
 	};
 }
