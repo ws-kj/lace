@@ -83,7 +83,7 @@ A \ B
 Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
 Returns a vector of elements in A that are not in B
 */
-template <typename T> 
+template <class T> 
 vector<T> difference(A, B){
 	vector<T> vect_inA_notB;
 	for(T element: A){
@@ -94,7 +94,7 @@ vector<T> difference(A, B){
 			}
 		}
 		if(!found){
-			
+
 			vect_inA_notB.push_back(element);
 		}
 	}
