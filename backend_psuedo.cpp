@@ -26,7 +26,6 @@ A subset B (is how it would be called)
 Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
 Not taking namespaces into account
 add std in before vector
-
 */
 template <class T> 
 bool subset(vector<T> A, vector<T> B){
@@ -74,7 +73,6 @@ bool subset(vector<T> A, vector<T> B){
 Assuming A is a properly declared vector 
 Returning a boolean on if a set is equivalent to the empty set
 add std in before vector
-
 */
 template <class T> 
 bool is_empty_set(vector<T> A){
@@ -109,4 +107,40 @@ vector<T> difference(vector<T> A, vector<T> B){
 		}
 	}
 	return vect_inA_notB;
+}
+
+
+// THE UNION STATEMENT
+/*
+A union B (is how it would be called)
+Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
+Not taking namespaces into account
+add std in before vector
+returns a + b
+*/
+
+// THE INTER STATEMENT
+/*
+A union B (is how it would be called)
+Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
+Not taking namespaces into account
+add std in before vector
+returns the shared values of a and b 
+*/
+template <class T> 
+vector<T> inter(vector<T> A, vector<T> B){
+	vector<T> vect_in_both;
+	for(T element: A){
+		bool found = false;
+		for(T element2: B){
+			if(element==element2){
+				found = true;
+			}
+		}
+		if(found){
+
+			vect_in_both.push_back(element);
+		}
+	}
+	return vect_in_both;
 }
