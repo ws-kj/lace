@@ -246,3 +246,23 @@ T abs(T x){
 	*/
 	return x;
 }
+
+// THE SAME FUNCTION
+/*
+lace::the_same(a, b)
+assuming a is a properly declared vector and b is a properly declared vector of the same type as a
+not using namespace
+returns true if sets are the same or false if different
+*/
+
+template <class T>
+bool the_same(vector<T> A, vector<T> B){
+	vector<T> inA_maybeB = difference(A, B);
+	vector<T> inB_maybeA = difference(B, A);
+	if(inB_maybeA.size()!=0 || inA_maybeB.size()!=0){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
