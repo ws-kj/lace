@@ -266,3 +266,15 @@ bool the_same(vector<T> A, vector<T> B){
 		return true;
 	}
 }
+
+
+// EMPTY SET
+/*
+generates and returns the empty set
+not using namespace
+*/
+template <class T>
+vector<T> empty_set(){
+	vector<T> empty;
+	return empty;
+}
