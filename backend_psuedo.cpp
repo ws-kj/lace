@@ -116,12 +116,27 @@ A union B (is how it would be called)
 Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
 Not taking namespaces into account
 add std in before vector
+UNION is a protected keyword
 returns a + b
 */
+template <class T> 
+vector<T> unions(vector<T> A, vector<T> B){
+	vector<T> both_combined;
+	for(T elem: A){
+		both_combined.push_back(elem);
+	}
+	for(T elem: B){
+		both_combined.push_back(elem);
+	}
+
+	return both_combined;
+}
+
+
 
 // THE INTER STATEMENT
 /*
-A union B (is how it would be called)
+A inter B (is how it would be called)
 Assuming A is a properly declared vector and B is a properly declared vector filled with datatypes that match A
 Not taking namespaces into account
 add std in before vector
