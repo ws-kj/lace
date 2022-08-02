@@ -7,6 +7,9 @@
 
 namespace lace 
 {
+	template <typename T>
+	constexpr bool is_lacetype = (std::is_same<T, lace::Set>::value || std::is_same<T, lace::Num>::value);
+	
 	typedef double Num;
 
 	class Set 
@@ -36,4 +39,5 @@ namespace lace
 		std::optional<lace::Set> getData();
 		std::string getError();
 	};
+
 }
