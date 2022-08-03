@@ -12,28 +12,32 @@ namespace lace
 	
 	typedef double prim;
 
-	class Num
+	class LaceType 
 	{
+	protected:
 		std::string name;
+	public:
+		std::string getName();
+	};
+
+	class Num : public LaceType
+	{
 		lace::prim value;
 
 	public:
 		Num(std::string name, lace::prim value);
 
-		std::string getName();
-		double getValue();
+		lace::prim getValue();
 	};
 
-	class Set 
+	class Set : public LaceType
 	{
-		std::string name;
 		std::vector<lace::prim> data;
 
 	public:
 		Set();
 		Set(std::string name, std::vector<lace::prim>& vec);
 		
-		std::string getName();
 		std::vector<lace::prim> asVec();
 	};
 
@@ -60,18 +64,8 @@ namespace lace
 	public:
 		Expression(std::string expr);
 
-		template<typename T>
-		lace::Expression& withInput(T data) {
-			static_assert(lace::is_lacetype<T>);
-
-			if (std::is_same<T, lace::Set>::value)
-				this->input_sets.push_back(data);
-//			if(typeid(data) == typeid(lace::Num))
-//				this->input_nums.push_back(data);
-
-
-			return *this;
-		}
+		Expression& withInput(lace::Num num);
+		Expression& withInput(lace::Set set);
 
 		lace::Result evaluate();
 	};
