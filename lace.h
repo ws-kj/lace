@@ -22,42 +22,29 @@ namespace lace
 
 	class Num : public LaceType
 	{
-		lace::prim value;
-
 	public:
+		Num(std::string name);
 		Num(std::string name, lace::prim value);
-
-		lace::prim getValue();
+		lace::prim value;
 	};
 
 	class Set : public LaceType
 	{
+	public:
+		Set(std::string name);
+		Set(std::string name, std::vector<lace::prim> vec);
+
 		std::vector<lace::prim> data;
 
-	public:
-		Set();
-		Set(std::string name, std::vector<lace::prim>& vec);
-		
-		std::vector<lace::prim> asVec();
-	};
-
-	class Result 
-	{
-		lace::Set data;
-		std::string err;
-
-	public:
-		Result(lace::Set data);
-		Result(lace::Set data, std::string err);
-
-		std::optional<lace::Set> getData();
-		std::string getError();
 	};
 
 	class Expression 
 	{
 		std::vector<lace::Set> input_sets;
 		std::vector<lace::Num> input_nums;
+
+		std::vector<lace::Set*> output_sets;
+		std::vector<lace::Num*> output_nums;
 
 		std::string expr_raw;
 
@@ -67,6 +54,9 @@ namespace lace
 		Expression& withInput(lace::Num num);
 		Expression& withInput(lace::Set set);
 
-		lace::Result evaluate();
+		Expression& withOutput(lace::Num* num);
+		Expression& withOutput(lace::Set* set);
+
+		Expression& evaluate();
 	};
 }
