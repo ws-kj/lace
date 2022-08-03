@@ -47,10 +47,10 @@ namespace lace
 		std::vector<Set*> output_sets;
 		std::vector<Num*> output_nums;
 
-		std::string expr_raw;
+		const char* expr_raw;
 
 	public:
-		Expression(std::string expr);
+		Expression(const char* expr);
 
 		Expression& with_input(Num num);
 		Expression& with_input(Set set);

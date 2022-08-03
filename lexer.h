@@ -25,7 +25,7 @@ namespace lace::lexer {
 		SETTYPE, NUMTYPE, FUNCTYPE, INF,
 		RSET, ZSET, QSET, ESET,
 		ELEM, SUBSET, PSUBSET, 
-		UNION, INTER, SUM, SIG
+		UNION, INTER, SUM, SIGMA
 	};
 
 	struct Token {
@@ -34,17 +34,18 @@ namespace lace::lexer {
 	};
 
 	class Lexer {
+		const char* beg;
+
 		char peek();
 		char get();
 		char back();
 
 		Token build_ident();
 		Token build_num();
-		const char* beg;
 
 	public:
 		Token next();
-		std::vector<Token> build_token_stream(char* input);
+		std::vector<Token> build_token_stream(const char* input);
 	};
 
 	bool is_space(char c);

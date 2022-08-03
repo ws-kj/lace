@@ -24,7 +24,7 @@ std::string LaceType::get_name() {
 	return this->name;
 }
 
-Expression::Expression(std::string expr) {
+Expression::Expression(const char* expr) {
 	this->expr_raw = expr;
 }
 

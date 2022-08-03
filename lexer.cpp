@@ -2,9 +2,13 @@
 
 using namespace lace;
 
-
-std::vector<lexer::Token> lexer::Lexer::build_token_stream(char* input) {
+std::vector<lexer::Token> lexer::Lexer::build_token_stream(const char* input) {
 	std::vector<Token> stream;
+
+	this->beg = input;
+
+	while (this->peek())
+		stream.push_back(this->next());
 
 	return stream;
 }
@@ -131,12 +135,38 @@ lexer::Token lexer::Lexer::build_ident() {
 	label += this->get();
 	while (lexer::is_ident(this->peek()) || lexer::is_digit(this->peek())) label += this->get();
 
-	try { 
-		double num = std::stod(label); 
-		return lexer::Token{ lexer::TokenType::NUM, num };
-	} catch (std::invalid_argument& e) {
-		throw("lace: invalid num construction");
-	}
+	if(label == "let")
+		return lexer::Token{ lexer::TokenType::LET };
+	else if (label == "do")
+		return lexer::Token{ lexer::TokenType::DO };
+	else if (label == "sqrt")
+		return lexer::Token{ lexer::TokenType::SQRT };
+	else if (label == "abs")
+		return lexer::Token{ lexer::TokenType::ABS };
+	else if (label == "set")
+		return lexer::Token{ lexer::TokenType::SETTYPE };
+	else if (label == "num")
+		return lexer::Token{ lexer::TokenType::NUMTYPE };
+	else if (label == "func")
+		return lexer::Token{ lexer::TokenType::FUNCTYPE };
+	else if (label == "inf")
+		return lexer::Token{ lexer::TokenType::INF };
+	else if (label == "elem")
+		return lexer::Token{ lexer::TokenType::ELEM };
+	else if (label == "subset")
+		return lexer::Token{ lexer::TokenType::SUBSET };
+	else if (label == "psubset")
+		return lexer::Token{ lexer::TokenType::PSUBSET };
+	else if (label == "union")
+		return lexer::Token{ lexer::TokenType::UNION };
+	else if (label == "inter")
+		return lexer::Token{ lexer::TokenType::INTER };
+	else if (label == "sum")
+		return lexer::Token{ lexer::TokenType::SUM };
+	else if (label == "sigma")
+		return lexer::Token{ lexer::TokenType::SIGMA };
+
+	return lexer::Token{ lexer::TokenType::IDENT, label };
 }
 
 lexer::Token lexer::Lexer::build_num() {
@@ -144,7 +174,13 @@ lexer::Token lexer::Lexer::build_num() {
 	label += this->get();
 	while (lexer::is_digit(this->peek()) || this->peek() == '.') label += this->get();
 
-	return lexer::Token{ lexer::TokenType::IDENT, label };
+	try {
+		double num = std::stod(label);
+		return lexer::Token{ lexer::TokenType::NUM, num };
+	}
+	catch (std::invalid_argument& e) {
+		throw("lace: invalid num construction");
+	}
 }
 
 char lexer::Lexer::peek() {
