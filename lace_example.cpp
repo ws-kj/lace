@@ -6,8 +6,8 @@ int main(int argc, char** argv)
 	lace::Set outb = lace::Set("B");
 
 	lace::Expression expr = lace::Expression("A \\ {2, 4, 6}")
-		.withInput(lace::Set("A", vec))
-		.withOutput(&outb)
+		.with_input(lace::Set("A", vec))
+		.with_output(&outb)
 		.evaluate();
 
 	//std::cout << outb.data[0] << std::endl;

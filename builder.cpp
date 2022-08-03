@@ -20,7 +20,7 @@ Set::Set(std::string name, std::vector<prim> vec) {
 	this->data = vec;
 }
 
-std::string LaceType::getName() {
+std::string LaceType::get_name() {
 	return this->name;
 }
 
@@ -28,25 +28,25 @@ Expression::Expression(std::string expr) {
 	this->expr_raw = expr;
 }
 
-Expression& Expression::withInput(Set set) {
+Expression& Expression::with_input(Set set) {
 	this->input_sets.push_back(set);
 
 	return *this;
 }
 
-Expression& Expression::withInput(Num num) {
+Expression& Expression::with_input(Num num) {
 	this->input_nums.push_back(num);
 
 	return *this;
 }
 
-Expression& Expression::withOutput(Set* set) {
+Expression& Expression::with_output(Set* set) {
 	this->output_sets.push_back(set);
 
 	return *this;
 }
 
-Expression& Expression::withOutput(Num* num) {
+Expression& Expression::with_output(Num* num) {
 	this->output_nums.push_back(num);
 
 	return *this;

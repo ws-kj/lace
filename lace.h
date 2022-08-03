@@ -5,7 +5,6 @@
 #include <vector>
 #include <optional>
 
-#include "lexer.h"
 
 namespace lace 
 {
@@ -19,7 +18,7 @@ namespace lace
 	protected:
 		std::string name;
 	public:
-		std::string getName();
+		std::string get_name();
 	};
 
 	class Num : public LaceType
@@ -53,11 +52,11 @@ namespace lace
 	public:
 		Expression(std::string expr);
 
-		Expression& withInput(Num num);
-		Expression& withInput(Set set);
+		Expression& with_input(Num num);
+		Expression& with_input(Set set);
 
-		Expression& withOutput(Num* num);
-		Expression& withOutput(Set* set);
+		Expression& with_output(Num* num);
+		Expression& with_output(Set* set);
 
 		Expression& evaluate();
 	};

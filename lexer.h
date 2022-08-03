@@ -1,31 +1,51 @@
 #pragma once
 
+#include <variant>
 #include "lace.h"
 
 namespace lace::lexer {
-	enum Token {
-		/* symbolic tokens */
-		T_PLUS, T_MINUS, T_BSLASH,
-		T_STAR, T_SLASH, T_TILDE,
-		T_LPAREN, T_RPAREN, 
-		T_LBRACE, T_RBRACE, 
-		T_LBRACKET, T_RBRACKET,
-		T_CARET, T_UTRI, T_DTRI, 
-		T_EQ, T_NEQ, T_DEQ,
-		T_ARROW, T_BARROW, T_EXCL, T_BAR,
-		T_LT, T_LTEQ, T_GT, T_GTEQ,
-		T_COMMA, T_PERIOD, T_EOF, T_HASH,
+	enum class TokenType {
+		/* symbolic */
+		PLUS, MINUS, BSLASH,
+		STAR, SLASH, TILDE,
+		LPAREN, RPAREN, 
+		LBRACE, RBRACE, 
+		LBRACKET, RBRACKET,
+		CARET, UTRI, DTRI, 
+		EQ, NEQ, DEQ,
+		ARROW, DARROW, EXCL, PIPE,
+		LT, LTEQ, GT, GTEQ,
+		COMMA, PERIOD, HASH,
 
-		/* literal tokens */
-		T_NUMLIT, T_CHARLIT,
+		NUM, IDENT,
 
-		/* label tokens */
-		T_LET, T_DO, T_END,
-		T_SET, T_NUM, T_FUNC, T_INF,
-		T_RSET, T_ZSET, T_QSET, T_ESET,
-		T_ELEM, T_SUBSET, T_PSUBSET, 
-		T_UNION, T_INTER, T_SUM, T_SIG,
-		T_SQRT, T_ABS
+		/* label */
+		LET, DO, END, SQRT, ABS,
+		SETTYPE, NUMTYPE, FUNCTYPE, INF,
+		RSET, ZSET, QSET, ESET,
+		ELEM, SUBSET, PSUBSET, 
+		UNION, INTER, SUM, SIG
 	};
 
-}
+	struct Token {
+		TokenType type;
+		std::optional<std::variant<double, unsigned char>> value;
+	};
+
+	class Lexer {
+		char peek();
+		char get();
+		Token build_ident();
+		Token build_num();
+		const char* beg;
+
+	public:
+		Token next();
+		std::vector<Token> build_token_stream(char* input);
+	};
+
+	bool is_space(char c);
+	bool is_digit(char c);
+	bool is_ident(char c);
+
+} 
