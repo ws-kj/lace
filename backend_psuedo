@@ -249,7 +249,7 @@ T abs(T x){
 
 // THE SAME FUNCTION
 /*
-lace::the_same(a, b)
+lace::the_same(a, b);
 assuming a is a properly declared vector and b is a properly declared vector of the same type as a
 not using namespace
 returns true if sets are the same or false if different
