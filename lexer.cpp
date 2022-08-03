@@ -24,18 +24,33 @@ std::vector<lexer::Token> lexer::Lexer::build_token_stream(const char* input) {
 lexer::Token lexer::Lexer::next() {
 	while (is_space(this->look()))  this->get();
 
-	std::cout << this->peek();
 	if (this->peek() == 0x0)
 		return lexer::Token{ lexer::TokenType::INPUT_END };
-
-	//std::cout << peek();
 
 	switch (this->peek()) {
 		case '+':
 			return lexer::Token{ lexer::TokenType::PLUS };
 
 		case '-':
-			return lexer::Token{ lexer::TokenType::MINUS };
+		{
+			this->get();
+			char nextc = this->peek();
+			this->back();
+			if (lexer::is_digit(nextc)) {
+				try {
+					lexer::Token ntok = this->build_num();
+					lace::prim n = std::get<lace::prim>(ntok.value.value());
+					std::cout << n;
+
+					return ntok;
+				}
+				catch (std::exception& e) { throw e; }
+			}
+			else {
+				this->back();
+				return lexer::Token{ lexer::TokenType::MINUS };
+			}
+		}
 
 		case '*':
 			return lexer::Token{ lexer::TokenType::STAR };

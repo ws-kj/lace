@@ -64,7 +64,7 @@ Expression& Expression::evaluate() {
 			std::cout << " Value: ";
 
 		if (t.type == lexer::TokenType::NUM)
-			std::cout << std::get<double>(t.value.value());
+			std::cout << std::get<lace::prim>(t.value.value());
 		else if (t.type == lexer::TokenType::IDENT)
 			std::cout << std::get<std::string>(t.value.value());
 

@@ -32,7 +32,7 @@ namespace lace::lexer {
 
 	struct Token {
 		TokenType type;
-		std::optional<std::variant<double, std::string>> value;
+		std::optional<std::variant<lace::prim, std::string>> value;
 	};
 
 	class Lexer {
