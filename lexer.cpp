@@ -1,81 +1,165 @@
 #include "lexer.h"
 
-using namespace lace::lexer;
+using namespace lace;
 
 
-std::vector<Token> Lexer::build_token_stream(char* input) {
+std::vector<lexer::Token> lexer::Lexer::build_token_stream(char* input) {
 	std::vector<Token> stream;
 
 	return stream;
 }
 
-Token Lexer::next() {
+lexer::Token lexer::Lexer::next() {
 	while (is_space(this->peek())) this->get();
-
-	if (is_digit(peek()))
-		return this->build_num();
-	if (is_ident(peek()))
-		return this->build_ident();
 
 	switch (peek()) {
 		case '+':
-			return Token{ TokenType::PLUS };
+			return lexer::Token{ lexer::TokenType::PLUS };
+
 		case '-':
-			return Token{ TokenType::MINUS };
+			return lexer::Token{ lexer::TokenType::MINUS };
+
 		case '*':
-			return Token{ TokenType::STAR };
+			return lexer::Token{ lexer::TokenType::STAR };
+
 		case '/':
-			//build /\ 
-			return Token{ TokenType::SLASH };
+			if (this->get() == '\\')
+				return lexer::Token{ lexer::TokenType::UTRI };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::SLASH };
+
 		case '\\':
-			//build \/
-			return Token{ TokenType::BSLASH };
+			if (this->get() == '/')
+				return lexer::Token{ lexer::TokenType::DTRI };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::BSLASH };
+
 		case '~':
-			return Token{ TokenType::TILDE };
+			return lexer::Token{ lexer::TokenType::TILDE };
+
 		case '(':
-			return Token{ TokenType::LPAREN };
+			return lexer::Token{ lexer::TokenType::LPAREN };
+
 		case ')':
-			return Token{ TokenType::RPAREN };
+			return lexer::Token{ lexer::TokenType::RPAREN };
+
 		case '{':
-			return Token{ TokenType::LBRACE };
+			return lexer::Token{ lexer::TokenType::LBRACE };
+
 		case '}':
-			return Token{ TokenType::RBRACE };
+			return lexer::Token{ lexer::TokenType::RBRACE };
+
 		case '[':
-			return Token{ TokenType::LBRACKET };
+			return lexer::Token{ lexer::TokenType::LBRACKET };
+
 		case ']':
-			return Token{ TokenType::RBRACKET };
+			return lexer::Token{ lexer::TokenType::RBRACKET };
+
 		case '^':
-			return Token{ TokenType::CARET };
+			return lexer::Token{ lexer::TokenType::CARET };
+
 		case '=':
-			//build ==
-			return Token{ TokenType::EQ };
+			if (this->get() == '=')
+				return lexer::Token{ lexer::TokenType::DEQ };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::EQ };
+
 		case '!':
-			//build !=
-			return Token{ TokenType::EXCL };
+			if (this->get() == '=')
+				return lexer::Token{ lexer::TokenType::NEQ };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::EXCL };
+
 		case '<':
-			// buld <=
-			return Token{ TokenType::LT };
+			if (this->get() == '=')
+				return lexer::Token{ lexer::TokenType::LTEQ };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::LT };
+
 		case '>':
-			// build >=
-			return Token{ TokenType::GT };
+			if (this->get() == '=')
+				return lexer::Token{ lexer::TokenType::GTEQ };
+			else
+				this->back();
+			return lexer::Token{ lexer::TokenType::GT };
+
 		case ',':
-			return Token{ TokenType::COMMA };
+			return lexer::Token{ lexer::TokenType::COMMA };
+
 		case '.':
-			return Token{ TokenType::PERIOD };
+			return lexer::Token{ lexer::TokenType::PERIOD };
+
 		case '|':
-			return Token{ TokenType::PIPE };
+			return lexer::Token{ lexer::TokenType::PIPE };
+
+		case ':':
+			char next = this->get();
+			switch (next) {
+			case 'Z':
+				return lexer::Token{ lexer::TokenType::ZSET };
+			case 'Q':
+				return lexer::Token{ lexer::TokenType::QSET };
+			case 'R':
+				return lexer::Token{ lexer::TokenType::RSET };
+			case 'E':
+				return lexer::Token{ lexer::TokenType::ESET };
+			default:
+				this->back();
+			}
+			return lexer::Token{ lexer::TokenType::COLON };
+	}
+
+	if (is_digit(peek())) {
+		try {
+			return this->build_num();
+		} catch (std::exception& e) { throw e; }
+	}
+
+	if (is_ident(peek()))
+		return this->build_ident();
+
+	throw std::exception("lace: invalid character");
+}
+
+lexer::Token lexer::Lexer::build_ident() {
+	std::string label;
+	label += this->get();
+	while (lexer::is_ident(this->peek()) || lexer::is_digit(this->peek())) label += this->get();
+
+	try { 
+		double num = std::stod(label); 
+		return lexer::Token{ lexer::TokenType::NUM, num };
+	} catch (std::invalid_argument& e) {
+		throw("lace: invalid num construction");
 	}
 }
 
-char Lexer::peek() {
+lexer::Token lexer::Lexer::build_num() {
+	std::string label;
+	label += this->get();
+	while (lexer::is_digit(this->peek()) || this->peek() == '.') label += this->get();
+
+	return lexer::Token{ lexer::TokenType::IDENT, label };
+}
+
+char lexer::Lexer::peek() {
 	return *(this->beg);
 }
 
-char Lexer::get() {
+char lexer::Lexer::get() {
 	return *(this->beg++);
 }
  
-bool is_space(char c) {
+char lexer::Lexer::back() {
+	return *(this->beg--);
+}
+
+bool lexer::is_space(char c) {
 	switch (c) {
 	case ' ':
 	case '\r':
@@ -86,14 +170,14 @@ bool is_space(char c) {
 	}
 }
 
-bool is_digit(char c) {
+bool lexer::is_digit(char c) {
 	if (isdigit((int)c))
 		return true;
 	else
 		return false;
 }
 
-bool is_ident(char c) {
+bool lexer::is_ident(char c) {
 	if (isalpha((int)c) || c == '_')
 		return true;
 	else

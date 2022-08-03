@@ -5,21 +5,22 @@
 
 namespace lace::lexer {
 	enum class TokenType {
-		/* symbolic */
+		/* symbols */
 		PLUS, MINUS, BSLASH,
 		STAR, SLASH, TILDE,
 		LPAREN, RPAREN, 
 		LBRACE, RBRACE, 
 		LBRACKET, RBRACKET,
 		CARET, UTRI, DTRI, 
-		EQ, NEQ, DEQ,
+		EQ, NEQ, DEQ, COLON,
 		ARROW, DARROW, EXCL, PIPE,
 		LT, LTEQ, GT, GTEQ,
 		COMMA, PERIOD, HASH,
 
+		/* data */
 		NUM, IDENT,
 
-		/* label */
+		/* keywords */
 		LET, DO, END, SQRT, ABS,
 		SETTYPE, NUMTYPE, FUNCTYPE, INF,
 		RSET, ZSET, QSET, ESET,
@@ -29,12 +30,14 @@ namespace lace::lexer {
 
 	struct Token {
 		TokenType type;
-		std::optional<std::variant<double, unsigned char>> value;
+		std::optional<std::variant<double, std::string>> value;
 	};
 
 	class Lexer {
 		char peek();
 		char get();
+		char back();
+
 		Token build_ident();
 		Token build_num();
 		const char* beg;
