@@ -5,7 +5,7 @@ int main(int argc, char** argv)
 	std::vector<lace::prim> vec{ 1, 2, 3, 4, 5, 6 };
 	lace::Set outb = lace::Set("B");
 
-	lace::Expression("A \\ {2, 4, 6}")
+	lace::Expression expr = lace::Expression("A \\ {2, 4, 6}")
 		.withInput(lace::Set("A", vec))
 		.withOutput(&outb)
 		.evaluate();

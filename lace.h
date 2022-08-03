@@ -5,6 +5,8 @@
 #include <vector>
 #include <optional>
 
+#include "lexer.h"
+
 namespace lace 
 {
 	template <typename T>
