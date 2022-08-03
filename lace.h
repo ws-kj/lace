@@ -8,7 +8,7 @@
 namespace lace 
 {
 	template <typename T>
-	constexpr bool is_lacetype = (std::is_same<T, lace::Set>::value || std::is_same<T, lace::Num>::value);
+	constexpr bool is_lacetype = (std::is_same<T, Set>::value || std::is_same<T, Num>::value);
 	
 	typedef double prim;
 
@@ -24,38 +24,38 @@ namespace lace
 	{
 	public:
 		Num(std::string name);
-		Num(std::string name, lace::prim value);
-		lace::prim value;
+		Num(std::string name, prim value);
+		prim value;
 	};
 
 	class Set : public LaceType
 	{
 	public:
 		Set(std::string name);
-		Set(std::string name, std::vector<lace::prim> vec);
+		Set(std::string name, std::vector<prim> vec);
 
-		std::vector<lace::prim> data;
+		std::vector<prim> data;
 
 	};
 
 	class Expression 
 	{
-		std::vector<lace::Set> input_sets;
-		std::vector<lace::Num> input_nums;
+		std::vector<Set> input_sets;
+		std::vector<Num> input_nums;
 
-		std::vector<lace::Set*> output_sets;
-		std::vector<lace::Num*> output_nums;
+		std::vector<Set*> output_sets;
+		std::vector<Num*> output_nums;
 
 		std::string expr_raw;
 
 	public:
 		Expression(std::string expr);
 
-		Expression& withInput(lace::Num num);
-		Expression& withInput(lace::Set set);
+		Expression& withInput(Num num);
+		Expression& withInput(Set set);
 
-		Expression& withOutput(lace::Num* num);
-		Expression& withOutput(lace::Set* set);
+		Expression& withOutput(Num* num);
+		Expression& withOutput(Set* set);
 
 		Expression& evaluate();
 	};

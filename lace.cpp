@@ -1,57 +1,58 @@
 ﻿#include "lace.h"
 
+using namespace lace;
 
-lace::Num::Num(std::string name) {
+Num::Num(std::string name) {
 	this->name = name;
 }
 
-lace::Num::Num(std::string name, lace::prim value) {
+Num::Num(std::string name, prim value) {
 	this->name = name;
 	this->value = value;
 }
 
-lace::Set::Set(std::string name) {
+Set::Set(std::string name) {
 	this->name = name;
 }
 
-lace::Set::Set(std::string name, std::vector<lace::prim> vec) {
+Set::Set(std::string name, std::vector<prim> vec) {
 	this->name = name;
 	this->data = vec;
 }
 
-std::string lace::LaceType::getName() {
+std::string LaceType::getName() {
 	return this->name;
 }
 
-lace::Expression::Expression(std::string expr) {
+Expression::Expression(std::string expr) {
 	this->expr_raw = expr;
 }
 
-lace::Expression& lace::Expression::withInput(lace::Set set) {
+Expression& Expression::withInput(Set set) {
 	this->input_sets.push_back(set);
 
 	return *this;
 }
 
-lace::Expression& lace::Expression::withInput(lace::Num num) {
+Expression& Expression::withInput(Num num) {
 	this->input_nums.push_back(num);
 
 	return *this;
 }
 
-lace::Expression& lace::Expression::withOutput(lace::Set* set) {
+Expression& Expression::withOutput(Set* set) {
 	this->output_sets.push_back(set);
 
 	return *this;
 }
 
-lace::Expression& lace::Expression::withOutput(lace::Num* num) {
+Expression& Expression::withOutput(Num* num) {
 	this->output_nums.push_back(num);
 
 	return *this;
 }
 
-lace::Expression& lace::Expression::evaluate() {
+Expression& Expression::evaluate() {
 	//interpret -> codegen -> bind outputs
 
 	return *this;
