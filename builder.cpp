@@ -1,4 +1,5 @@
 ﻿#include "lace.h"
+#include "lexer.h"
 
 using namespace lace;
 
@@ -54,6 +55,21 @@ Expression& Expression::with_output(Num* num) {
 
 Expression& Expression::evaluate() {
 	//interpret -> codegen -> bind outputs
+	lexer::Lexer l;
+	std::vector<lexer::Token> tokens = l.build_token_stream(this->expr_raw);
+
+	for (const auto& t : tokens) {
+		std::cout << "Token: " << (int)t.type;
+		if (t.value) 
+			std::cout << " Value: ";
+
+		if (t.type == lexer::TokenType::NUM)
+			std::cout << std::get<double>(t.value.value());
+		else if (t.type == lexer::TokenType::IDENT)
+			std::cout << std::get<std::string>(t.value.value());
+
+		std::cout << std::endl;
+	}
 
 	return *this;
 }

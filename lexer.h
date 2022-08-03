@@ -18,14 +18,16 @@ namespace lace::lexer {
 		COMMA, PERIOD, HASH,
 
 		/* data */
-		NUM, IDENT,
+		NUM, IDENT, 
 
 		/* keywords */
 		LET, DO, END, SQRT, ABS,
 		SETTYPE, NUMTYPE, FUNCTYPE, INF,
 		RSET, ZSET, QSET, ESET,
 		ELEM, SUBSET, PSUBSET, 
-		UNION, INTER, SUM, SIGMA
+		UNION, INTER, SUM, SIGMA,
+
+		INPUT_END
 	};
 
 	struct Token {
@@ -39,6 +41,7 @@ namespace lace::lexer {
 		char peek();
 		char get();
 		char back();
+		char look();
 
 		Token build_ident();
 		Token build_num();

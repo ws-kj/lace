@@ -3,20 +3,34 @@
 using namespace lace;
 
 std::vector<lexer::Token> lexer::Lexer::build_token_stream(const char* input) {
-	std::vector<Token> stream;
+	std::vector<Token> tokens;
 
 	this->beg = input;
 
-	while (this->peek())
-		stream.push_back(this->next());
+	while (this->peek()) {
+		lexer::Token next_tok = this->next();
+		tokens.push_back(next_tok);
 
-	return stream;
+		if (next_tok.type == lexer::TokenType::INPUT_END)
+			break;
+
+		this->get();
+	}
+	std::cout << std::endl;
+
+	return tokens;
 }
 
 lexer::Token lexer::Lexer::next() {
-	while (is_space(this->peek())) this->get();
+	while (is_space(this->look()))  this->get();
 
-	switch (peek()) {
+	std::cout << this->peek();
+	if (this->peek() == 0x0)
+		return lexer::Token{ lexer::TokenType::INPUT_END };
+
+	//std::cout << peek();
+
+	switch (this->peek()) {
 		case '+':
 			return lexer::Token{ lexer::TokenType::PLUS };
 
@@ -38,6 +52,7 @@ lexer::Token lexer::Lexer::next() {
 				return lexer::Token{ lexer::TokenType::DTRI };
 			else
 				this->back();
+
 			return lexer::Token{ lexer::TokenType::BSLASH };
 
 		case '~':
@@ -173,6 +188,7 @@ lexer::Token lexer::Lexer::build_num() {
 	std::string label;
 	label += this->get();
 	while (lexer::is_digit(this->peek()) || this->peek() == '.') label += this->get();
+	this->back();
 
 	try {
 		double num = std::stod(label);
@@ -195,22 +211,38 @@ char lexer::Lexer::back() {
 	return *(this->beg--);
 }
 
+char lexer::Lexer::look() {
+	const char* cur = this->beg;
+	return *(cur--);
+}
+
+
 bool lexer::is_space(char c) {
 	switch (c) {
-	case ' ':
-	case '\r':
-	case '\t':
-		return true;
-	default:
-		return false;
+		case ' ':
+		case '\r':
+		case '\t':
+			return true;
+		default:
+			return false;
 	}
 }
 
 bool lexer::is_digit(char c) {
-	if (isdigit((int)c))
-		return true;
-	else
-		return false;
+	switch (c) {
+		case '0':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return true;
+		default:
+			return false;
+		}
 }
 
 bool lexer::is_ident(char c) {
