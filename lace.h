@@ -5,6 +5,7 @@
 #include <vector>
 #include <optional>
 
+#define LACE_RAW(...) #__VA_ARGS__
 
 namespace lace 
 {

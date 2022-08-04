@@ -1,5 +1,6 @@
 ﻿#include "lace.h"
 #include "lexer.h"
+#include "parser.h"
 
 using namespace lace;
 
@@ -33,8 +34,7 @@ Expression& Expression::with_output(Num* num) {
 
 Expression& Expression::evaluate() {
 	//interpret -> codegen -> bind outputs
-	lexer::Lexer l;
-	std::vector<lexer::Token> tokens = l.build_token_stream(this->expr_raw);
+	std::vector<lexer::Token> tokens = lexer::Lexer().build_token_stream(this->expr_raw);
 
 	for (const auto& t : tokens) {
 		std::cout << "Token: " << (int)t.type;
