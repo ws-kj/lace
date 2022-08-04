@@ -3,28 +3,6 @@
 
 using namespace lace;
 
-Num::Num(std::string name) {
-	this->name = name;
-}
-
-Num::Num(std::string name, prim value) {
-	this->name = name;
-	this->value = value;
-}
-
-Set::Set(std::string name) {
-	this->name = name;
-}
-
-Set::Set(std::string name, std::vector<prim> vec) {
-	this->name = name;
-	this->data = vec;
-}
-
-std::string LaceType::get_name() {
-	return this->name;
-}
-
 Expression::Expression(const char* expr) {
 	this->expr_raw = expr;
 }
