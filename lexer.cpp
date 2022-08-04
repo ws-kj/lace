@@ -131,6 +131,7 @@ lexer::Token lexer::Lexer::next() {
 			return lexer::Token{ lexer::TokenType::PIPE };
 
 		case ':':
+		{
 			char next = this->get();
 			switch (next) {
 			case 'Z':
@@ -145,6 +146,11 @@ lexer::Token lexer::Lexer::next() {
 				this->back();
 			}
 			return lexer::Token{ lexer::TokenType::COLON };
+		}
+
+		case '`':
+		case '\n':
+			return lexer::Token{ lexer::TokenType::NEWLINE };
 	}
 
 	if (is_digit(this->peek())) {
@@ -174,6 +180,8 @@ lexer::Token lexer::Lexer::build_ident() {
 		return lexer::Token{ lexer::TokenType::SQRT };
 	else if (label == "abs")
 		return lexer::Token{ lexer::TokenType::ABS };
+	else if (label == "mod")
+		return lexer::Token{ lexer::TokenType::MOD };
 	else if (label == "set")
 		return lexer::Token{ lexer::TokenType::SETTYPE };
 	else if (label == "num")

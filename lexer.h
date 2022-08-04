@@ -21,13 +21,14 @@ namespace lace::lexer {
 		NUM, IDENT, 
 
 		/* keywords */
-		LET, DO, END, SQRT, ABS,
+		LET, DO, END, SQRT, ABS, MOD,
 		SETTYPE, NUMTYPE, FUNCTYPE, INF,
 		RSET, ZSET, QSET, ESET,
 		ELEM, SUBSET, PSUBSET, 
 		UNION, INTER, SUM, SIGMA,
 
-		INPUT_END
+		/* other */
+		NEWLINE, INPUT_END
 	};
 
 	struct Token {
