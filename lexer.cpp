@@ -40,7 +40,6 @@ lexer::Token lexer::Lexer::next() {
 				try {
 					lexer::Token ntok = this->build_num();
 					lace::prim n = std::get<lace::prim>(ntok.value.value());
-					std::cout << n;
 
 					return ntok;
 				}
@@ -148,22 +147,24 @@ lexer::Token lexer::Lexer::next() {
 			return lexer::Token{ lexer::TokenType::COLON };
 	}
 
-	if (is_digit(peek())) {
+	if (is_digit(this->peek())) {
 		try {
 			return this->build_num();
 		} catch (std::exception& e) { throw e; }
 	}
 
-	if (is_ident(peek()))
+	if (is_ident(this->peek()))
 		return this->build_ident();
 
 	throw std::exception("lace: invalid character");
 }
 
 lexer::Token lexer::Lexer::build_ident() {
+
 	std::string label;
 	label += this->get();
 	while (lexer::is_ident(this->peek()) || lexer::is_digit(this->peek())) label += this->get();
+	this->back();
 
 	if(label == "let")
 		return lexer::Token{ lexer::TokenType::LET };
