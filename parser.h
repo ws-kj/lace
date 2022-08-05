@@ -62,6 +62,24 @@ namespace lace::parser {
 		ReservedNode(lexer::TokenType type) : type(type) {}
 	};
 
+	class ProtoNode : public parser::ASTNode {
+		std::string name;
+		std::vector<std::string> arg_names;
+
+	public:
+		ProtoNode(std::string name, std::vector<std::string> arg_names) :
+			name(name), arg_names(std::move(arg_names)) {}
+	};
+
+	class FuncNode : public parser::ASTNode {
+		std::unique_ptr<parser::ProtoNode> proto;
+		std::unique_ptr<parser::ASTNode> body;
+
+	public:
+		FuncNode(std::unique_ptr<parser::ProtoNode> proto, std::unique_ptr<parser::ASTNode> body) :
+			proto(std::move(proto)), body(std::move(body)) {}
+	};
+
 	class CallNode : public parser::ASTNode {
 		lexer::Token callee;
 		std::vector<std::unique_ptr<parser::ASTNode>> args;
@@ -69,6 +87,30 @@ namespace lace::parser {
 	public:
 		CallNode(lexer::Token callee, std::vector<std::unique_ptr<parser::ASTNode>> args) :
 			callee(callee), args(std::move(args)) {}
+	};
+
+	class ElifNode : public parser::ASTNode {
+		std::unique_ptr<parser::ASTNode> cond;
+		std::unique_ptr<parser::ASTNode> body;
+
+	public:
+		ElifNode(std::unique_ptr<parser::ASTNode> cond, std::unique_ptr<parser::ASTNode> body) :
+			cond(std::move(cond)), body(std::move(body)) {}
+	};
+
+	class IfNode : public parser::ASTNode {
+		std::unique_ptr<parser::ASTNode> cond;
+		std::unique_ptr<parser::ASTNode> body;
+		
+		std::vector<std::unique_ptr<parser::ElifNode>> elifs;
+		std::optional<std::unique_ptr<parser::ASTNode>> else_body;
+
+	public:
+		IfNode(std::unique_ptr<parser::ASTNode> cond, std::unique_ptr<parser::ASTNode> body,
+			std::vector<std::unique_ptr<parser::ElifNode>> elifs,
+			std::optional<std::unique_ptr<parser::ASTNode>> else_body) :
+			cond(std::move(cond)), body(std::move(body)), 
+			elifs(std::move(elifs)), else_body(std::move(else_body)) {}
 	};
 
 }
