@@ -174,8 +174,10 @@ lexer::Token lexer::Lexer::build_ident() {
 
 	if(label == "let")
 		return lexer::Token{ lexer::TokenType::LET };
-	else if (label == "do")
-		return lexer::Token{ lexer::TokenType::DO };
+	else if (label == "end")
+		return lexer::Token{ lexer::TokenType::END };
+	else if (label == "else")
+		return lexer::Token{ lexer::TokenType::ELSE };
 	else if (label == "sqrt")
 		return lexer::Token{ lexer::TokenType::SQRT };
 	else if (label == "abs")

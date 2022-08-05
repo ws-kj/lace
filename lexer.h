@@ -21,7 +21,7 @@ namespace lace::lexer {
 		NUM, IDENT, 
 
 		/* keywords */
-		LET, DO, END, SQRT, ABS, MOD,
+		LET,  END, ELSE, SQRT, ABS, MOD,
 		SETTYPE, NUMTYPE, FUNCTYPE, INF,
 		RSET, ZSET, QSET, ESET,
 		ELEM, SUBSET, PSUBSET, 
