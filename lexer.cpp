@@ -162,7 +162,7 @@ lexer::Token lexer::Lexer::next() {
 	if (is_ident(this->peek()))
 		return this->build_ident();
 
-	throw std::exception("lace: invalid character");
+	throw std::exception();
 }
 
 lexer::Token lexer::Lexer::build_ident() {

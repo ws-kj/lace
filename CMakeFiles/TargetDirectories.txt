@@ -1,0 +1,3 @@
+/Users/997968/lace/CMakeFiles/lace.dir
+/Users/997968/lace/CMakeFiles/edit_cache.dir
+/Users/997968/lace/CMakeFiles/rebuild_cache.dir

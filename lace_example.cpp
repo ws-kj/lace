@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 		)).with_output(&outb).evaluate();
 		*/
 
-	lace::Expression expr = lace::Expression(LACE_RAW(B = A \ {2, abs(-4), 6} ))
+	lace::Expression expr = lace::Expression(LACE_RAW(B = A \\ {2, abs(-4), 6} ))
 		.with_input(lace::Set("A", vec))
 		.with_output(&outb)
 		.evaluate(); 

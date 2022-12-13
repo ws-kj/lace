@@ -54,13 +54,13 @@ namespace lace::parser {
 		ContainNode(lexer::TokenType type, std::unique_ptr<parser::ASTNode> contents) : 
 			type(type), contents(std::move(contents)) {}
 	};
-
-	public ListNode : public parser::ASTNode{
+    
+    class ListNode : public parser::ASTNode{
 		std::vector<std::unique_ptr<parser::ASTNode>> items;
 
 	public:
 		ListNode(std::vector<std::unique_ptr<parser::ASTNode>> items) : items(std::move(items)) {}
-	}
+	};
 
 
 	class ReservedNode : public parser::ASTNode {
